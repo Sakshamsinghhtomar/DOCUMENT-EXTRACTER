@@ -48,6 +48,15 @@ const start = async () => {
     console.log('Initializing database...');
     await initDb();
     console.log('Database initialized successfully.');
+    const path = require('path');
+
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Handle React routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
     app.listen(PORT, () => {
       console.log(`DocExtract AI Server listening on port ${PORT}`);
